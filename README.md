@@ -3,7 +3,8 @@ oci8Pdo
 
 ## A Yii Extension to simulate the Oracle PDO using the PHP OCI8 functions. The PDO simulation files can be used without Yii as well.
 
-The goal of this PDO class is to simulate 99% of the PDO functions that you use in an application. If you find any problems, I would love the feedback. Please open an Issue.
+The goal of this PDO class is to simulate 99% of the PDO functions that you use in an application.  
+If you find any problems, I would love the feedback. Please open an Issue. Creating UnitTests is on my TODO list.
 
 ## 1. Usage standalone
 Include the Oci8PDO.php file into your project.

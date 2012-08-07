@@ -58,7 +58,7 @@ Step 3: Edit your config file to configure another database component. Please re
               /*
                * ** Full Connection String **
                * Use this method incase your Easy Connect gives you errors and you can't edit the sqlnet.ora file.
-               * You can set the charset in this string as well, add `;charset=AL32UTF8;` at the end.
+               * You can set the charset in this string as well, add `;charset=AL32UTF8;` at the end for UTF-8.
                */
               'connectionString' => 'oci:dbname=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=myOracleHost.com)
                                                  (PORT=1526))(CONNECT_DATA=(SERVICE_NAME=myService.intern)));charset=AL32UTF8;',
@@ -86,15 +86,15 @@ A few examples:
     $oci = Yii::app()->dbOracle;    
     $sql = <<<SQL
 SELECT
-  T.ANNOUNCEMENT
-  , T.DESCRIPTION
-  , T.TYPE
+  t.ANNOUNCEMENT
+  , t.DESCRIPTION
+  , t.TYPE
 FROM
-  CCQ.ANNOUNCEMENT_LIS T
+  CCQ.ANNOUNCEMENT_LIST t
 WHERE
-  T.TYPE = 0
-  AND T.DESCRIPTION NOT LIKE '%MENU%'
-  AND T.DESCRIPTION NOT LIKE '%Menu%'
+  t.TYPE = 0
+  AND t.DESCRIPTION NOT LIKE '%MENU%'
+  AND t.DESCRIPTION NOT LIKE '%Menu%'
   AND rownum<=2
 ORDER BY 1
 SQL;
@@ -124,8 +124,8 @@ SQL;
 <?php
     $row = Yii::app()->dbOracle->createCommand()
             ->select('t.DESCRIPTION')
-            ->from('CCQ.Z_LOCAL_OUTAGES t')
-            ->where('ticket=:ticket', array(':ticket'=>123))
+            ->from('CCQ.MY_ANNOUNCEMENTS t')
+            ->where('TICKET=:ticket', array(':ticket'=>123))
             ->queryRow();
 ```
 
@@ -183,8 +183,8 @@ class IvrModel extends CActiveRecord
             return array(
                   array('PKEY', 'default', 'value'=>new CDbExpression('(select max(PKEY)+1 from "CCQ"."MY_ANNOUNCEMENTS")'),
                                                       'setOnEmpty'=>false, 'on'=>'insert'),
-                  array('DATUMTIJD', 'default', 'value'=>new CDbExpression('SYSDATE'), 'setOnEmpty'=>false, 'on'=>'insert'),
-                  array('DATUMTIJD', 'default', 'value'=>new CDbExpression('SYSDATE'), 'setOnEmpty'=>false, 'on'=>'update'),
+                  array('DATETIME', 'default', 'value'=>new CDbExpression('SYSDATE'), 'setOnEmpty'=>false, 'on'=>'insert'),
+                  array('DATETIME', 'default', 'value'=>new CDbExpression('SYSDATE'), 'setOnEmpty'=>false, 'on'=>'update'),
             );
       }
 }

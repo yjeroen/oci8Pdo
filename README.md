@@ -74,7 +74,7 @@ Step 4: There is no step four. You're done!
 
 
 ## 3. Usage
-To start, you need to understand that Oracle Databases have **CASE-SENSITIVE** columns. Most DataBase Administrators in the Oracle world use capital table names and capital column names. That means you have to do that as well.
+To start, you need to understand that Oracle Databases have **CASE-SENSITIVE** columns. Most DataBase Administrators in the Oracle world use capital table names and capital column names. That means you have to do that as well in your application.
 
 ### 3.1 DOA and the Query Builder both work. As long as you use the _right_ database component.
 A few examples:
@@ -190,8 +190,11 @@ class IvrModel extends CActiveRecord
 <?php
     $oneModel = IvrModel::model()->find('TICKET=:ticket', array(':ticket'=>12345));
     $allModels = IvrModel::model()->findAll();
-    
+```
+```php
+<?php
     $model = new IvrModel;
+     //Note the attributes fully capitalized
     $model->PC_TO = 1111;
     $model->PC_FROM = 1113;
     $model->PRODUCTTYPE = 'Internet';

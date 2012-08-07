@@ -12,7 +12,7 @@ Include the Oci8PDO.php file into your project.
     require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'pdo'.DIRECTORY_SEPARATOR.'Oci8PDO.php');
 ```
 
-# 2. Install for Yii Framework
+## 2. Install for Yii Framework
 Step 1: Copy the _oci8Pdo_ folder to /protected/extensions/.
 
 Step 2: Edit your config file so your extension is imported:
@@ -79,7 +79,7 @@ To start, you need to understand that Oracle Databases have **CASE-SENSITIVE** c
 A few examples:
 ```php
 <?php
-    $oci = Yii::app()->dbIvr;    
+    $oci = Yii::app()->dbOracle;    
     $sql = <<<SQL
 SELECT
   T.ANNOUNCEMENT
@@ -102,7 +102,7 @@ SQL;
 ```
 ```php
 <?php
-    $oci = Yii::app()->dbIvr;   
+    $oci = Yii::app()->dbOracle;   
     $command = $oci->createCommand();
     $rows = $command->insert('CCQ.MY_ANNOUNCEMENTS', array(
         'PKEY'=>new CDbExpression('(select max(PKEY)+1 from "CCQ"."MY_ANNOUNCEMENTS")'),
@@ -118,7 +118,7 @@ SQL;
 ```
 ```php
 <?php
-    $row = Yii::app()->dbIvr->createCommand()
+    $row = Yii::app()->dbOracle->createCommand()
             ->select('t.DESCRIPTION')
             ->from('CCQ.Z_LOCAL_OUTAGES t')
             ->where('ticket=:ticket', array(':ticket'=>123))
@@ -128,7 +128,7 @@ SQL;
 ### 3.2 ActiveRecord works as well!
 There are two important things to consider however:
 * Column names are case-sensitive, that means that the Models' **attributes** are as well!
-* The database schema for Oracle (`COciSchema`) can be quite heavy on performance. That means that if you want to use Oracle in combination of ActiveRecord, you **HAVE** to cache the schema, or else you will experience a very bad performance. Check the following two links:
+* The database schema for Oracle (`COciSchema`) can be quite heavy on performance. That means that if you want to use Oracle in combination of ActiveRecord, you **HAVE** to cache the schema, or else you will experience a lot of performance degradation. Check the following two links:
     - http://www.yiiframework.com/doc/blog/1.1/en/final.deployment#enabling-schema-caching
     - http://www.yiiframework.com/wiki/118/incresing-ar-performance-in-connections-with-oracle/
 
@@ -144,7 +144,7 @@ class IvrModel extends CActiveRecord
             if(self::$db!==null) {
                   return self::$db;
             } else {
-                  self::$db = Yii::app()->dbIvr;
+                  self::$db = Yii::app()->dbOracle;
                   return self::$db;
             }
       }
@@ -193,9 +193,6 @@ class IvrModel extends CActiveRecord
     $model->TTS = '';
     $model->ANNOUNCEMENT = '7501.wav';
     $model->TYPE = 0;
-    $model->ORDER_OUTAGES = 2;
-    $model->AGENTID = 'ics_test';
-    $model->DESCRIPTION = 'nieuwe AR test!';
     $model->TICKET = 5555;
     $model->save();
 ```

@@ -139,6 +139,10 @@ Some examples:
 <?php
 class IvrModel extends CActiveRecord
 {
+    /**
+	 * Returns the Oracle database connection used by this active record.
+	 * @return OciDbConnection the Oracle database connection used by this active record.
+	 */
       public function getDbConnection()
       {
             if(self::$db!==null) {

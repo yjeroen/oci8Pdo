@@ -44,11 +44,14 @@ Step 3: Edit your config file to configure another database component. Please re
         'dbOracle'=>array(
               'class'=>'OciDbConnection',
               /*
+               * Note: Normally you use the Easy Connect string, but your server has 
+               * to be correctly set-up for that.
+               * 
                * ** Easy Connect String **
                * If you get the following error: `ORA-12154: TNS:could not resolve the connect identifier specified`,
                * go to /opt/oracle/instantclient/sqlnet.ora and change the following line:
                *    NAMES.DIRECTORY_PATH= (TNSNAMES)
-               * And change to:
+               * Change this to:
                *    NAMES.DIRECTORY_PATH= (TNSNAMES, EZCONNECT)
                */
        //    'connectionString' => 'oci:dbname=//myOracleHost.com:1526/ccq',
@@ -64,8 +67,8 @@ Step 3: Edit your config file to configure another database component. Please re
               /*
                * enableProfiling and enableParamLogging are working like normal; Default is false.
                */
-              'enableProfiling'=>true,
-              'enableParamLogging'=>true,
+              'enableProfiling' => true,
+              'enableParamLogging' => true,
         ),
     ),
 ```

@@ -83,6 +83,7 @@ To start, you need to understand that Oracle Databases have **CASE-SENSITIVE** c
 A few examples:
 ```php
 <?php
+    //Getting the Oracle DB connection
     $oci = Yii::app()->dbOracle;    
     $sql = <<<SQL
 SELECT
@@ -101,8 +102,9 @@ SQL;
     
     $command = $ivr->createCommand($sql);       
     $dataReader = $command->query();
-    foreach($dataReader as $row)
+    foreach($dataReader as $row) {
         echo $row['DESCRIPTION'],'$dataReader';
+    }
 ```
 ```php
 <?php
@@ -197,7 +199,7 @@ class IvrModel extends CActiveRecord
 ```php
 <?php
     $model = new IvrModel;
-     //Note the attributes fully capitalized
+     //Note the attributes are fully capitalized
     $model->PC_TO = 1111;
     $model->PC_FROM = 1113;
     $model->PRODUCTTYPE = 'Internet';

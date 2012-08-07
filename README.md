@@ -5,14 +5,14 @@ oci8Pdo
 
 The goal of this PDO class is to simulate 99% of the PDO functions that you use in an application. If you find any problems, I would love the feedback. Please open an Issue.
 
-## Usage standalone
+## 1. Usage standalone
 Include the Oci8PDO.php file into your project.
 ```php
 <?php
     require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'pdo'.DIRECTORY_SEPARATOR.'Oci8PDO.php');
 ```
 
-# Install for Yii Framework
+# 2. Install for Yii Framework
 Step 1: Copy the _oci8Pdo_ folder to /protected/extensions/.
 
 Step 2: Edit your config file so your extension is imported:
@@ -72,10 +72,10 @@ Step 3: Edit your config file to configure another database component. Please re
 Step 4: There is no step four. You're done!
 
 
-## Usage
+## 3. Usage
 To start, you need to understand that Oracle Databases have **CASE-SENSITIVE** columns. Most DataBase Administrators in the Oracle world use capital table names and capital column names. That means you have to do that as well.
 
-### DOA and the Query Builder both work. As long as you use the right database component.
+### 3.1 DOA and the Query Builder both work. As long as you use the _right_ database component.
 A few examples:
 ```php
 <?php
@@ -125,7 +125,7 @@ SQL;
             ->queryRow();
 ```
 
-### ActiveRecord works as well!
+### 3.2 ActiveRecord works as well!
 There are two important things to consider however:
 * Column names are case-sensitive, that means that the Models' **attributes** are as well!
 * The database schema for Oracle (`COciSchema`) can be quite heavy on performance. That means that if you want to use Oracle in combination of ActiveRecord, you **HAVE** to cache the schema, or else you will experience a very bad performance. Check the following two links:

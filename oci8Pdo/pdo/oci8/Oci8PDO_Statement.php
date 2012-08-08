@@ -100,8 +100,13 @@ class Oci8PDO_Statement extends PDOStatement
                 }
             }
         }
-        
-        return oci_execute($this->_sth, $mode);
+
+        if(@oci_execute($this->_sth, $mode)) {
+            return true;
+        } else {
+            $e = oci_error($this->_sth);
+            throw new PDOException($e['message']);
+        }
     }
 
     /**

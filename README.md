@@ -16,19 +16,7 @@ Include the Oci8PDO.php file into your project.
 ## 2. Install for Yii Framework
 Step 1: Copy the _oci8Pdo_ folder to /protected/extensions/.
 
-Step 2: Edit your config file so your extension is imported:
-
-```php
-<?php
-    // autoloading model and component classes
-    'import'=>array(
-        'application.components.*',
-        'application.models.*',
-        'ext.oci8Pdo.OciDbConnection',
-    ),
-```
-
-Step 3: Edit your config file to configure another database component. Please read the comments.
+Step 2: Edit your config file to configure another database component. Please read the comments.
 
 ```php
 <?php
@@ -42,7 +30,7 @@ Step 3: Edit your config file to configure another database component. Please re
               'charset' => 'utf8',
         ),
         'dbOracle'=>array(
-              'class'=>'OciDbConnection',
+              'class'=>'ext.oci8Pdo.OciDbConnection',
               /*
                * Note: Normally you use the Easy Connect string, but your server has 
                * to be correctly set-up for that.
@@ -73,7 +61,7 @@ Step 3: Edit your config file to configure another database component. Please re
     ),
 ```
 
-Step 4: There is no step four. You're done!
+Step 3: There is no step three. You're done!
 
 
 ## 3. Usage

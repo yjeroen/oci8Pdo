@@ -24,7 +24,6 @@ class OciDbConnection extends CDbConnection
 			$pdoClass = parent::createPdoInstance();
 		}
 		catch(PDOException $e) {
-			tr($this);
 			throw $e;
 		}
 		return $pdoClass;

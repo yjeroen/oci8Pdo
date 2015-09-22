@@ -193,7 +193,21 @@ class Oci8PDO_Statement extends PDOStatement
         	if($length == -1) {
         		 $length = strlen( (string)$variable );
         	}
-        	return oci_bind_by_name($this->_sth, $parameter, $variable, $length);
+
+            if ($data_type == Oci8PDO::PARAM_BLOB) {
+                $clob = oci_new_descriptor($this->_pdoOci8->getDbh(), OCI_D_LOB);
+                $res = oci_bind_by_name($this->_sth, $parameter, $clob, -1, OCI_B_BLOB);
+                $clob->writeTemporary($variable, OCI_TEMP_BLOB);
+                return $res;
+            } else if ($data_type == Oci8PDO::PARAM_CLOB) {
+                $clob = oci_new_descriptor($this->_pdoOci8->getDbh(), OCI_D_LOB);
+                $res = oci_bind_by_name($this->_sth, $parameter, $clob, -1, OCI_B_CLOB);
+                $clob->writeTemporary($variable, OCI_TEMP_CLOB);
+                return $res;
+            }
+            else {
+                return oci_bind_by_name($this->_sth, $parameter, $variable, $length);
+            }
         }
 
         

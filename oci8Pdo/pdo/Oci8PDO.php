@@ -30,6 +30,20 @@ require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'oci8'.DIRECTORY_SEPARATOR.'O
 class Oci8PDO extends PDO
 {
     /**
+     * Ananalog constant OCI_B_CLOB
+     *
+     * @const int
+     */
+    const PARAM_CLOB = 112;
+
+    /**
+     * Ananalog constant OCI_B_BLOB
+     *
+     * @const int
+     */
+    const PARAM_BLOB = 113;
+
+    /**
      * Database handler
      *
      * @var resource
@@ -91,6 +105,15 @@ class Oci8PDO extends PDO
         }
         
         $this->_options = $options;
+    }
+
+    /**
+     * Return the resource connection
+     *
+     * @return mixed
+     */
+    public function getDbh() {
+        return $this->_dbh;
     }
 
     /**

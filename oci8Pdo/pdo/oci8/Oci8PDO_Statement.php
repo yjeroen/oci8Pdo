@@ -80,7 +80,7 @@ class Oci8PDO_Statement extends PDOStatement
      * @param array $inputParams
      * @return bool
      */
-    public function execute($inputParams = null)
+    public function execute($inputParams = null): bool
     {
         $mode = OCI_COMMIT_ON_SUCCESS;
         if ($this->_pdoOci8->isTransaction()) {
@@ -119,7 +119,7 @@ class Oci8PDO_Statement extends PDOStatement
      */
     public function fetch($fetch_style = PDO::FETCH_BOTH,
                           $cursor_orientation = PDO::FETCH_ORI_NEXT,
-                          $cursor_offset = 0)
+                          $cursor_offset = 0): mixed
     {
     	if($cursor_orientation !== PDO::FETCH_ORI_NEXT || $cursor_offset !== 0) {
     		throw new PDOException('$cursor_orientation that is not PDO::FETCH_ORI_NEXT is not implemented for Oci8PDO_Statement::fetch()');
@@ -167,7 +167,7 @@ class Oci8PDO_Statement extends PDOStatement
                               &$variable,
                               $data_type = PDO::PARAM_STR,
                               $length = -1,
-                              $driver_options = null)
+                              $driver_options = null): bool
     {
     	if($driver_options !== null) {
     		throw new PDOException('$driver_options is not implemented for Oci8PDO_Statement::bindParam()');
@@ -209,7 +209,6 @@ class Oci8PDO_Statement extends PDOStatement
                 return oci_bind_by_name($this->_sth, $parameter, $variable, $length);
             }
         }
-
         
     }
 
@@ -231,7 +230,7 @@ class Oci8PDO_Statement extends PDOStatement
                                &$param,
                                $type = PDO::PARAM_STR,
                                $maxlen = null,
-                               $driverdata = null)
+                               $driverdata = null): bool
     {
     	if($maxlen !== null || $driverdata !== null) {
     		throw new PDOException('$maxlen and $driverdata parameters are not implemented for Oci8PDO_Statement::bindColumn()');
@@ -272,7 +271,7 @@ class Oci8PDO_Statement extends PDOStatement
      */
     public function bindValue($parameter,
                               $variable,
-                              $dataType = PDO::PARAM_STR)
+                              $dataType = PDO::PARAM_STR): bool
     {
         return $this->bindParam($parameter, $variable, $dataType);
     }
@@ -282,7 +281,7 @@ class Oci8PDO_Statement extends PDOStatement
      *
      * @return int
      */
-    public function rowCount()
+    public function rowCount(): int
     {
         return oci_num_rows($this->_sth);
     }
@@ -293,7 +292,7 @@ class Oci8PDO_Statement extends PDOStatement
      * @param int $colNumber
      * @return string
      */
-    public function fetchColumn($colNumber = 0)
+    public function fetchColumn($colNumber = 0): mixed
     {
     	$result = oci_fetch_array($this->_sth, OCI_NUM);
     	
@@ -314,9 +313,7 @@ class Oci8PDO_Statement extends PDOStatement
      * @param array $ctor_args
      * @return mixed
      */
-    public function fetchAll($fetch_style = PDO::FETCH_BOTH,
-                             $fetch_argument = null,
-                             $ctor_args = null)
+    public function fetchAll(int $mode = PDO::FETCH_DEFAULT, mixed ...$args): array
     {
     	if($this->_fetchMode !== null) {
     		$fetch_style = $this->_fetchMode;
@@ -361,7 +358,7 @@ class Oci8PDO_Statement extends PDOStatement
      * @param array $ctor_args
      * @return mixed
      */
-    public function fetchObject($className = 'stdClass', $ctor_args = null)
+    public function fetchObject($className = 'stdClass', $ctor_args = null): object|false
     {
     	if($className == 'stdClass') {
     		$result = oci_fetch_object($this->_sth);
@@ -387,7 +384,7 @@ class Oci8PDO_Statement extends PDOStatement
      *
      * @return string
      */
-    public function errorCode()
+    public function errorCode(): ?string
     {
         $error = $this->errorInfo();
         return $error[0];
@@ -398,7 +395,7 @@ class Oci8PDO_Statement extends PDOStatement
      *
      * @return array
      */
-    public function errorInfo()
+    public function errorInfo(): array
     {
         $e = oci_error($this->_sth);
 
@@ -420,7 +417,7 @@ class Oci8PDO_Statement extends PDOStatement
      * @param mixed $value
      * @return bool
      */
-    public function setAttribute($attribute, $value)	
+    public function setAttribute($attribute, $value): bool
     {
         $this->_options[$attribute] = $value;
         return true;
@@ -431,7 +428,7 @@ class Oci8PDO_Statement extends PDOStatement
      *
      * @return mixed
      */
-    public function getAttribute($attribute)
+    public function getAttribute($attribute): mixed
     {
         if (isset($this->_options[$attribute])) {
             return $this->_options[$attribute];
@@ -444,7 +441,7 @@ class Oci8PDO_Statement extends PDOStatement
      *
      * @return int
      */
-    public function columnCount()
+    public function columnCount(): int
     {
         return oci_num_fields($this->_sth);
     }
@@ -468,7 +465,7 @@ class Oci8PDO_Statement extends PDOStatement
      * @param int $column Zero-based column index
      * @return array
      */
-    public function getColumnMeta($column)
+    public function getColumnMeta($column): array|false
     {
         // Columns in oci8 are 1-based; add 1 if it's a number
         if (is_numeric($column)) {
@@ -496,12 +493,10 @@ class Oci8PDO_Statement extends PDOStatement
      * @param array $ctorArgs
      * @return bool
      */
-    public function setFetchMode($mode,
-                                 $colClassOrObj = null,
-                                 array $ctorArgs = array())
+    public function setFetchMode(int $mode, mixed ...$args)
     {
     	//52: $this->_statement->setFetchMode(PDO::FETCH_ASSOC); 
-    	if($colClassOrObj !== null || !empty($ctorArgs)) {
+    	if(!empty($args)) {
     		throw new PDOException('Second and third parameters are not implemented for Oci8PDO_Statement::setFetchMode()');
     		//see http://www.php.net/manual/en/pdostatement.setfetchmode.php
     	}
@@ -514,7 +509,7 @@ class Oci8PDO_Statement extends PDOStatement
      *
      * @return bool
      */
-    public function nextRowset()
+    public function nextRowset(): bool
     {
     	throw new PDOException('nextRowset() method is not implemented for Oci8PDO_Statement');
     }
@@ -524,7 +519,7 @@ class Oci8PDO_Statement extends PDOStatement
      *
      * @return bool
      */
-    public function closeCursor()
+    public function closeCursor(): bool
     {
     	//Because we use OCI8 functions, we don't need this.
     	return oci_free_statement($this->_sth);
@@ -535,7 +530,7 @@ class Oci8PDO_Statement extends PDOStatement
      *
      * @return bool
      */
-    public function debugDumpParams()
+    public function debugDumpParams(): ?bool
     {
     	throw new PDOException('debugDumpParams() method is not implemented for Oci8PDO_Statement');
     }

@@ -6,6 +6,20 @@ oci8Pdo
 The goal of this PDO class is to simulate 99% of the PDO functions that you use in an application.  
 If you find any problems, I would love the feedback. Please open an Issue. Creating UnitTests is on my TODO list.
 
+## 0. Changes 
+
+Fixed multiple PHP 8.1 type compatibility issues
+
+Fixed Yii 1.1.27 PDO expecting `commit()` method in `CDbConnection` rather than in `CDbTransaction` and throwing PDO Error: "PDO object is not initialized, constructor was not called"
+
+Use `Yii::app()->db->commit()` instead of using:
+
+```
+$transaction = Yii::app()->db->beginTransaction();
+...
+$transaction->commit();
+```
+
 ## 1. Usage standalone
 Include the Oci8PDO.php file into your project.
 ```php

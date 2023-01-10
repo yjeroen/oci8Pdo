@@ -327,7 +327,9 @@ class Oci8PDO_Statement extends PDOStatement
     		oci_fetch_all($this->_sth, $preResult, 0, -1, OCI_FETCHSTATEMENT_BY_COLUMN+OCI_NUM );
     		$result = array();
     		foreach($preResult as $row) {
-    			$result[] = (array_key_exists(0, $row)) ? $row[0] : null;
+                if (array_key_exists(0, $row)) {
+        			$result[] = $row[0];
+                }
     		}
     	} elseif($fetch_style === PDO::FETCH_BOTH) {
     		throw new PDOException('PDO::FETCH_BOTH is not implemented for Oci8PDO_Statement::fetchAll()');
@@ -496,10 +498,12 @@ class Oci8PDO_Statement extends PDOStatement
     public function setFetchMode(int $mode, mixed ...$args)
     {
     	//52: $this->_statement->setFetchMode(PDO::FETCH_ASSOC); 
+        /*
     	if(!empty($args)) {
     		throw new PDOException('Second and third parameters are not implemented for Oci8PDO_Statement::setFetchMode()');
     		//see http://www.php.net/manual/en/pdostatement.setfetchmode.php
     	}
+        */
     	$this->_fetchMode = $mode;
     	return true;
     }

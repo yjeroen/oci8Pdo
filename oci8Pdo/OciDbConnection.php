@@ -38,5 +38,13 @@ class OciDbConnection extends CDbConnection
 		Yii::trace('Closing Oracle connection','ext.oci8Pdo.OciDbConnection');
 		parent::close();
 	}
+
+
+    public function commit()
+    {
+        Yii::trace('Commiting transaction','ext.oci8Pdo.OciDbConnection');
+        return parent::getPdoInstance()->commit();
+    }
+
 	
 }
